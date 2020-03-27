@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+
+# Source: https://github.com/proBieri/homematic2influxdb
+# 2020 Michael Bieri - michael@bieri.club
+
+
 import configparser
 import sys
 import xml.etree.ElementTree as ET
