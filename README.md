@@ -29,5 +29,6 @@ python3 homematic2influxdb.pl
 
 
 ## Kontakt
-[Michael Bieri](mailto:michael@bieri.club)
-[Raspberrymatic](https://michael.bieri.club)
+Michael Bieri
+[E-Mail](mailto:michael@bieri.club)
+[Webseite](https://michael.bieri.club)
