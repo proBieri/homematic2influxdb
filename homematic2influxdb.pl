@@ -40,13 +40,18 @@ except:
     sys.exit(2)
 
 
-# Validate input as value
-def isValidValue(string):
+# Validate input value
+def parseValue(string):
     try:
-        float(string)
-        return True
+        if (string == 'true'):
+            value = 1
+        elif (string == 'false'):
+            value =  0
+        else: 
+            value = float(string)
+        return value
     except ValueError:
-        return False
+        return None
 
 
 tree = ET.fromstring(response)
@@ -67,9 +72,9 @@ for device in tree.findall('device'):
             srcts = datetime.datetime.fromtimestamp(int(datapoint.get('timestamp')))
             ts = int(time.mktime(srcts.timetuple())* 1000)
 
-            print(datapoint.get('value'))
             # prepare influx entry
-            if (isValidValue(datapoint.get('value'))):
+            if (parseValue(datapoint.get('value')) is not None):
+                print("     ", device_name, datapoint.get('value'), parseValue(datapoint.get('value')))
                 dataitems.append("{measurement},device={device},datapoint={datapoint},channel={channel},datapointtype={datapoint_type} value={value} {timestamp}"
                     .format(
                         measurement=config['influxdb']['measurement'],
@@ -78,11 +83,10 @@ for device in tree.findall('device'):
                         datapoint=datapoint.get('name').replace(" ","\ "),
                         datapoint_type=datapoint.get('type').replace(" ","\ "),
                         value_type=datapoint.get('valuetype').replace(" ","\ "),
-                        value=float(datapoint.get('value')),
+                        value=parseValue(datapoint.get('value')),
                         timestamp=ts
                         )
                     )
-
     
 try:
     client.write_points(dataitems, database=config['influxdb']['database'], time_precision='ms', batch_size=1000, protocol='line')
