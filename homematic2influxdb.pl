@@ -74,7 +74,6 @@ for device in tree.findall('device'):
 
             # prepare influx entry
             if (parseValue(datapoint.get('value')) is not None):
-                print("     ", device_name, datapoint.get('value'), parseValue(datapoint.get('value')))
                 dataitems.append("{measurement},device={device},datapoint={datapoint},channel={channel},datapointtype={datapoint_type} value={value} {timestamp}"
                     .format(
                         measurement=config['influxdb']['measurement'],
