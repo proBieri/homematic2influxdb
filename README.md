@@ -6,7 +6,7 @@ Erzeugt eine Abfrage auf das XML-API einer Homematic (CCUx/Raspberrymatic) Zentr
 ## Voraussetzungen
 
 * Homematic CCUx oder [Raspberrymatic](https://raspberrymatic.de)
-* Homematic XML-APi AddOn [XML-API](https://www.homematic-inside.de/software/xml-api)
+* Homematic XML-API AddOn [XML-API](https://www.homematic-inside.de/software/xml-api)
 * InfluxDB [InfluxDB](https://www.influxdata.com/)
 * Python3
 
