@@ -5,7 +5,7 @@
 
 
 import configparser
-import sys
+import sys, os
 import xml.etree.ElementTree as ET
 import urllib.request
 import datetime
@@ -13,9 +13,15 @@ import time
 from influxdb import InfluxDBClient
 
 
-config = configparser.ConfigParser()
-config.read('settings.cfg')
+# locate current directory
+if __name__ == '__main__':
+    mypath = os.path.split(sys.argv[0])[0]
+else:
+    mypath = os.path.split(__file__)[0]
 
+# Read the config
+config = configparser.ConfigParser()
+config.read(os.path.join(mypath, 'settings.cfg'))
 
 # Initialize InfluxDB
 try:
@@ -61,7 +67,7 @@ for device in tree.findall('device'):
             srcts = datetime.datetime.fromtimestamp(int(datapoint.get('timestamp')))
             ts = int(time.mktime(srcts.timetuple())* 1000)
 
-
+            print(datapoint.get('value'))
             # prepare influx entry
             if (isValidValue(datapoint.get('value'))):
                 dataitems.append("{measurement},device={device},datapoint={datapoint},channel={channel},datapointtype={datapoint_type} value={value} {timestamp}"
